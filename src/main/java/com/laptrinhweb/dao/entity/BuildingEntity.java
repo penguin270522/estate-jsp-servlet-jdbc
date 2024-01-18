@@ -6,8 +6,8 @@ public class BuildingEntity {
 	private String street;
 	private String ward;
 	private String district;
-
 	private Integer floorArea;
+	private String type;
 
 	public Integer getFloorArea() {
 		return floorArea;
@@ -47,5 +47,12 @@ public class BuildingEntity {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

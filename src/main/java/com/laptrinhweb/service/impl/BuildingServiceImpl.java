@@ -3,6 +3,7 @@ package com.laptrinhweb.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.laptrinhweb.constant.SystemConstant;
 import com.laptrinhweb.dao.BuildingDao;
 import com.laptrinhweb.dao.entity.BuildingEntity;
 import com.laptrinhweb.dao.impl.BuildingDaoImpl;
@@ -20,7 +21,8 @@ public class BuildingServiceImpl implements BuildingService{
 																		buildingSearchFilterInput.getStreet(),
 																		buildingSearchFilterInput.getWard(),
 																		buildingSearchFilterInput.getDistrict(),
-																		buildingSearchFilterInput.getFloorArea());
+																		buildingSearchFilterInput.getFloorArea(),
+																		buildingSearchFilterInput.getType()	);
 
 		for (BuildingEntity buildingEntity : buildingEntities) {
 			BuildingSearchOutput buildingSearchOutput = new BuildingSearchOutput();
@@ -28,6 +30,27 @@ public class BuildingServiceImpl implements BuildingService{
 			buildingSearchOutput.setName(buildingEntity.getName());
 			buildingSearchOutput.setStreet(buildingEntity.getStreet() + " - " + buildingEntity.getWard() + " - " + buildingEntity.getDistrict());
 			buildingSearchOutput.setFloorArea(buildingEntity.getFloorArea());
+			String[] tachchuoi = buildingEntity.getType().split(",");
+			StringBuilder typeBuilder = new StringBuilder();
+
+			for(int i = 0; i < tachchuoi.length; i++){
+				if(tachchuoi[i] == SystemConstant.NGUYEN_CAN){
+					tachchuoi[i] = "nguyen can";
+				}
+				if(tachchuoi[i] == SystemConstant.NOI_THAT){
+					tachchuoi[i] = "noi that";
+				}
+				if(tachchuoi[i] == SystemConstant.TANG_TRET){
+					tachchuoi[i] = "tang tret";
+				}
+				typeBuilder.append(tachchuoi[i]);
+				if(i < tachchuoi.length - 1){
+					typeBuilder.append(", ");
+				}
+			}
+
+
+			buildingSearchOutput.setType(typeBuilder.toString());
 			resaults.add(buildingSearchOutput);
 		}
 		

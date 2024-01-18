@@ -37,6 +37,8 @@ public class BuildingListView {
 			System.out.print(", Street: " + buildingSearchOutput2.getStreet());
 
 			System.out.println(", FloorArea: " + buildingSearchOutput2.getFloorArea());
+
+			System.out.println(", Type: " + buildingSearchOutput2.getType());
 			
 		}
 
