@@ -4,6 +4,7 @@ public class BuildingSearchOutput {
 	private Long id;
 	private String name;
 	private String street;
+	private Integer floorArea;
 	
 	public Long getId() {
 		return id;
@@ -23,5 +24,6 @@ public class BuildingSearchOutput {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	
+	public Integer getFloorArea() { return floorArea; }
+	public void setFloorArea(Integer floorArea) { this.floorArea = floorArea; }
 }

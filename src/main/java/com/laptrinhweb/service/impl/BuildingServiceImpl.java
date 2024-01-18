@@ -16,14 +16,21 @@ public class BuildingServiceImpl implements BuildingService{
 	@Override
 	public List<BuildingSearchOutput> findBuilding(BuildingSearchInput buildingSearchFilterInput) {
 		List<BuildingSearchOutput> resaults = new ArrayList<>();
-		List<BuildingEntity> buildingEntities = buildingDao.findBuiling(buildingSearchFilterInput.getName());
+		List<BuildingEntity> buildingEntities = buildingDao.findBuiling(buildingSearchFilterInput.getName(),
+																		buildingSearchFilterInput.getStreet(),
+																		buildingSearchFilterInput.getWard(),
+																		buildingSearchFilterInput.getDistrict(),
+																		buildingSearchFilterInput.getFloorArea());
+
 		for (BuildingEntity buildingEntity : buildingEntities) {
 			BuildingSearchOutput buildingSearchOutput = new BuildingSearchOutput();
 			buildingSearchOutput.setId(buildingEntity.getId());
 			buildingSearchOutput.setName(buildingEntity.getName());
 			buildingSearchOutput.setStreet(buildingEntity.getStreet() + " - " + buildingEntity.getWard() + " - " + buildingEntity.getDistrict());
+			buildingSearchOutput.setFloorArea(buildingEntity.getFloorArea());
 			resaults.add(buildingSearchOutput);
 		}
+		
 		return resaults;
 	}
 

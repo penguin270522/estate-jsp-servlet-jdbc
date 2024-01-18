@@ -6,6 +6,17 @@ public class BuildingEntity {
 	private String street;
 	private String ward;
 	private String district;
+
+	private Integer floorArea;
+
+	public Integer getFloorArea() {
+		return floorArea;
+	}
+
+	public void setFloorArea(Integer floorArea) {
+		this.floorArea = floorArea;
+	}
+
 	public Long getId() {
 		return id;
 	}
