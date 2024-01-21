@@ -7,6 +7,7 @@ import com.laptrinhweb.constant.SystemConstant;
 import com.laptrinhweb.dao.BuildingDao;
 import com.laptrinhweb.dao.entity.BuildingEntity;
 import com.laptrinhweb.dao.impl.BuildingDaoImpl;
+import com.laptrinhweb.model.dto.BuildingDTO;
 import com.laptrinhweb.model.input.BuildingSearchInput;
 import com.laptrinhweb.model.output.BuildingSearchOutput;
 import com.laptrinhweb.service.BuildingService;
@@ -34,13 +35,13 @@ public class BuildingServiceImpl implements BuildingService{
 			StringBuilder typeBuilder = new StringBuilder();
 
 			for(int i = 0; i < tachchuoi.length; i++){
-				if(tachchuoi[i] == SystemConstant.NGUYEN_CAN){
+				if(tachchuoi[i].equals(SystemConstant.NGUYEN_CAN)){
 					tachchuoi[i] = "nguyen can";
 				}
-				if(tachchuoi[i] == SystemConstant.NOI_THAT){
+				if(tachchuoi[i].equals(SystemConstant.NOI_THAT)){
 					tachchuoi[i] = "noi that";
 				}
-				if(tachchuoi[i] == SystemConstant.TANG_TRET){
+				if(tachchuoi[i].equals(SystemConstant.TANG_TRET)){
 					tachchuoi[i] = "tang tret";
 				}
 				typeBuilder.append(tachchuoi[i]);
@@ -48,13 +49,22 @@ public class BuildingServiceImpl implements BuildingService{
 					typeBuilder.append(", ");
 				}
 			}
-
-
 			buildingSearchOutput.setType(typeBuilder.toString());
 			resaults.add(buildingSearchOutput);
 		}
 		
 		return resaults;
 	}
+
+	@Override
+	public void insertBuildingDTO(BuildingDTO buildingDTO) {
+		BuildingEntity buildingEntity = new BuildingEntity();
+		buildingEntity.setName(buildingDTO.getName());
+		buildingEntity.setStreet(buildingDTO.getStreet());
+		buildingDao.insertBuilding(buildingEntity);
+	}
+
+
+
 
 }

@@ -6,6 +6,9 @@ public class BuildingDTO {
 	private String ward;
 	private String district;
 	private String street;
+	private String [] types = new String[]{};
+	private Integer floorArea;
+
 	public Long getId() {
 		return id;
 	}
@@ -36,5 +39,20 @@ public class BuildingDTO {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	
+
+	public String[] getTypes() {
+		return types;
+	}
+
+	public void setTypes(String[] types) {
+		this.types = types;
+	}
+
+	public Integer getFloorArea() {
+		return floorArea;
+	}
+
+	public void setFloorArea(Integer floorArea) {
+		this.floorArea = floorArea;
+	}
 }

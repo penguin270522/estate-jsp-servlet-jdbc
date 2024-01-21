@@ -1,10 +1,6 @@
 package com.laptrinhweb.dao.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,29 +17,37 @@ public class BuildingDaoImpl implements BuildingDao{
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			conn = ConnectionUtils.getConnection();
-			stmt = conn.createStatement();
 			StringBuilder sql = new StringBuilder("select * from building " + SystemConstant.WHERE_ONE_EQUAL_ONE + "");
+			stmt = conn.createStatement();
 			if(name != null && name != "") {
-				sql.append(" and name like '%" + name +"%' ");
+  				sql.append(" and name like '%" + name +"%' ");
+
 			}
 			if(ward != null && ward != "") {
 				sql.append(" and ward like '%" + ward +"%' ");
+
 			}
 			if(street != null && street != "") {
 				sql.append(" and street like '%" + street +"%' ");
+
 			}
 			if(district != null && district != "") {
 				sql.append(" and district like '%" + district +"%' ");
+
+
 			}
 			if(floorArea != null) {
 				sql.append(" and floorArea like '%" + floorArea +"%' ");
+
 			}
 			if(type != null && type != ""){
 				sql.append(" and type like '%" + type + "%' ");
+
 			}
+
 			rs = stmt.executeQuery(sql.toString());
 				while (rs.next()) {
 					BuildingEntity buildingCkiuVk = new BuildingEntity();
@@ -79,6 +83,22 @@ public class BuildingDaoImpl implements BuildingDao{
 		}
 		return null;
 	}
+
+	@Override
+	public void insertBuilding(BuildingEntity buildingEntity) {
+		String sql = "INSERT INTO building (name, street) VALUES (?,?)";
+
+		try (Connection conn = ConnectionUtils.getConnection();
+			 PreparedStatement stmt = conn.prepareStatement(sql);){
+			stmt.setString(1, buildingEntity.getName());
+			stmt.setString(2, buildingEntity.getStreet());
+			stmt.executeUpdate();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+
 }
 	
 	

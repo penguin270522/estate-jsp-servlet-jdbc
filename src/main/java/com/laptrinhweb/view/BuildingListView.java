@@ -9,11 +9,11 @@ import com.laptrinhweb.model.output.BuildingSearchOutput;
 
 public class BuildingListView {
 	public static void main(String[] args) {
-//		Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 //		System.out.println("nhap ten toa nha: ");
 //		String name = input.nextLine();
-		String name = null;
-		Integer floorArea = 123123;
+		String name = "building 3";
+		Integer floorArea = null;
 		String street = null;
 		String ward = null;
 		String district = null;
@@ -41,6 +41,7 @@ public class BuildingListView {
 			System.out.println(", Type: " + buildingSearchOutput2.getType());
 			
 		}
+
 
 	}
 }
