@@ -50,15 +50,15 @@ public class BuildingDaoImpl implements BuildingDao{
 
 			rs = stmt.executeQuery(sql.toString());
 				while (rs.next()) {
-					BuildingEntity buildingCkiuVk = new BuildingEntity();
-					buildingCkiuVk.setId(rs.getLong("id"));
-					buildingCkiuVk.setName(rs.getString("name"));
-					buildingCkiuVk.setStreet(rs.getString("street"));
-					buildingCkiuVk.setWard(rs.getString("ward"));
-					buildingCkiuVk.setDistrict(rs.getString("district"));
-					buildingCkiuVk.setFloorArea(rs.getInt("floorArea"));
-					buildingCkiuVk.setType(rs.getString("type"));
-					results.add(buildingCkiuVk);
+					BuildingEntity buildingEntity = new BuildingEntity();
+					buildingEntity.setId(rs.getLong("id"));
+					buildingEntity.setName(rs.getString("name"));
+					buildingEntity.setStreet(rs.getString("street"));
+					buildingEntity.setWard(rs.getString("ward"));
+					buildingEntity.setDistrict(rs.getString("district"));
+					buildingEntity.setFloorArea(rs.getInt("floorArea"));
+					buildingEntity.setType(rs.getString("type"));
+					results.add(buildingEntity);
 				} 
 				return results;
 	 		} catch (SQLException | ArithmeticException e) {

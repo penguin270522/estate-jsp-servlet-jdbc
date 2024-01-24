@@ -6,9 +6,14 @@ import java.util.Map;
 public class BuildingTypeUtils {
     public static Map<String , String> getTypes(){
         Map<String, String> results = new HashMap<>();
-        results.put("tang_tret", "tang tret");
-        results.put("nguyen_can", "nguyen can");
-        results.put("noi_that", "noi that");
+        results.put("tang-tret", "tang tret");
+        results.put("nguyen-can", "nguyen can");
+        results.put("noi-that", "noi that");
         return results;
+
+
+
+
+
     }
 }

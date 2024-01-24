@@ -8,6 +8,7 @@ import com.laptrinhweb.constant.SystemConstant;
 import com.laptrinhweb.dao.BuildingDao;
 import com.laptrinhweb.dao.entity.BuildingEntity;
 import com.laptrinhweb.dao.impl.BuildingDaoImpl;
+import com.laptrinhweb.enums.BuildingTypeEnums;
 import com.laptrinhweb.model.dto.BuildingDTO;
 import com.laptrinhweb.model.input.BuildingSearchInput;
 import com.laptrinhweb.model.output.BuildingSearchOutput;
@@ -33,7 +34,9 @@ public class BuildingServiceImpl implements BuildingService{
 			buildingSearchOutput.setName(buildingEntity.getName());
 			buildingSearchOutput.setStreet(buildingEntity.getStreet() + " - " + buildingEntity.getWard() + " - " + buildingEntity.getDistrict());
 			buildingSearchOutput.setFloorArea(buildingEntity.getFloorArea());
-			buildingSearchOutput.setType(getType(buildingEntity.getType()));
+			buildingSearchOutput.setType(getType2(buildingEntity.getType()));
+			System.out.println("test 0: " + buildingEntity.getType());
+			System.out.println("test : " + getType2(buildingEntity.getType()));
 			resaults.add(buildingSearchOutput);
 
 		}
@@ -49,7 +52,7 @@ public class BuildingServiceImpl implements BuildingService{
 		buildingDao.insertBuilding(buildingEntity, buildingDTO.getRentArea());
 	}
 
-	private String getType(String type){
+	private String getType1(String type){
 		List<String> results = new ArrayList<>();
 		Map<String , String > buildingTypes = BuildingTypeUtils.getTypes();
 		for (String item : type.split(",")){
@@ -59,5 +62,33 @@ public class BuildingServiceImpl implements BuildingService{
 		return String.join(",", results);
 	}
 
+	private String getType2(String type){
+		List<String> results = new ArrayList<>();
+		String[] typeSplit = type.split(",");
+		for(String item : typeSplit){
+			switch (item){
+				case SystemConstant.NGUYEN_CAN:
+					results.add(SystemConstant.NGUYEN_CAN_CODE);
+					break;
+				case SystemConstant.NOI_THAT:
+					results.add(SystemConstant.NOI_THAT_CODE);
+					break;
+				case SystemConstant.TANG_TRET:
+					results.add(SystemConstant.TANG_TRET_CODE);
+					break;
+			}
+		}
+		return String.join(",", results);
+	}
+
+	private String getTypeVersion3(String type){
+		String[] typeSplit = type.split(",");
+		List<String> results = new ArrayList<>();
+		for(String item : typeSplit){
+			results.add(BuildingTypeEnums.valueOf(item).getValue());
+		}
+
+		return String.join(",", results);
+	}
 
 }
