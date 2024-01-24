@@ -9,6 +9,16 @@ public class BuildingDTO {
 	private String [] types = new String[]{};
 	private Integer floorArea;
 
+	private Integer [] rentArea = new Integer[]{};
+
+	public Integer[] getRentArea() {
+		return rentArea;
+	}
+
+	public void setRentArea(Integer[] rentArea) {
+		this.rentArea = rentArea;
+	}
+
 	public Long getId() {
 		return id;
 	}

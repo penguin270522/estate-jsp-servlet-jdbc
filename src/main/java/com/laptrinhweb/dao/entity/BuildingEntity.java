@@ -1,7 +1,7 @@
 package com.laptrinhweb.dao.entity;
 
-public class BuildingEntity {
-	private Long id;
+public class BuildingEntity extends BaseEntity{
+
 	private String name;
 	private String street;
 	private String ward;
@@ -17,12 +17,7 @@ public class BuildingEntity {
 		this.floorArea = floorArea;
 	}
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}

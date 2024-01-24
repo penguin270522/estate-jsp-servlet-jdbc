@@ -85,17 +85,99 @@ public class BuildingDaoImpl implements BuildingDao{
 	}
 
 	@Override
-	public void insertBuilding(BuildingEntity buildingEntity) {
-		String sql = "INSERT INTO building (name, street) VALUES (?,?)";
+	public void insertBuilding(BuildingEntity buildingEntity, Integer[] rentAreas) {
+		ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
 
-		try (Connection conn = ConnectionUtils.getConnection();
-			 PreparedStatement stmt = conn.prepareStatement(sql);){
+		try {
+			conn = ConnectionUtils.getConnection();
+			conn.setAutoCommit(false);
+			String sql1 = "INSERT INTO building (name, street) VALUES (?,?)";
+			stmt = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, buildingEntity.getName());
 			stmt.setString(2, buildingEntity.getStreet());
-			stmt.executeUpdate();
+			//resultset -> return id
+			int flag = stmt.executeUpdate();
+			//flag luon luon = 1 vi chung ta chi co them toa nha thoi
+			rs = stmt.getGeneratedKeys();
+			Long id = null;
+			if(flag > 0){
+				while(rs.next()){
+					id = rs.getLong(1);
+
+				}
+			}
+			//insert rentarea
+
+			if(rentAreas != null && rentAreas.length > 0){
+				for(Integer item : rentAreas){
+					String sql2 = "INSERT INTO rentarea (values, buildingid) VALUES (?,?)";
+					stmt = conn.prepareStatement(sql2);
+					stmt.setInt(1, item);
+					stmt.setLong(2, id);
+					stmt.executeUpdate();
+				}
+			}
+			conn.commit();
 		}catch (SQLException e){
-			e.printStackTrace();
+			try {
+				conn.rollback();
+			}catch (SQLException e1){
+				e1.printStackTrace();
+			}
+
+		} finally {
+			try{
+				if(conn != null){
+					conn.rollback();
+				}
+				if(stmt != null){
+					stmt.close();
+				}
+				if(rs != null){
+					rs.close();
+				}
+			}catch (Exception e){
+				System.out.println(e.getMessage());
+			}
 		}
+	}
+
+	@Override
+	public BuildingEntity findById(Long id) {
+		BuildingEntity results = new BuildingEntity();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try{
+			conn = ConnectionUtils.getConnection();
+			String sql = "select id from building where id = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setLong(1, id);
+			rs = stmt.executeQuery();
+
+			if(rs.next()){
+				return null;
+			}
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (stmt != null) stmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+
+
+
+		return null;
 	}
 
 

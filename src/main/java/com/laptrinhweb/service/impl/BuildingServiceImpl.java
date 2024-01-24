@@ -2,6 +2,7 @@ package com.laptrinhweb.service.impl;
 	
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.laptrinhweb.constant.SystemConstant;
 import com.laptrinhweb.dao.BuildingDao;
@@ -11,6 +12,7 @@ import com.laptrinhweb.model.dto.BuildingDTO;
 import com.laptrinhweb.model.input.BuildingSearchInput;
 import com.laptrinhweb.model.output.BuildingSearchOutput;
 import com.laptrinhweb.service.BuildingService;
+import com.laptrinhweb.utils.BuildingTypeUtils;
 
 public class BuildingServiceImpl implements BuildingService{
 
@@ -31,26 +33,9 @@ public class BuildingServiceImpl implements BuildingService{
 			buildingSearchOutput.setName(buildingEntity.getName());
 			buildingSearchOutput.setStreet(buildingEntity.getStreet() + " - " + buildingEntity.getWard() + " - " + buildingEntity.getDistrict());
 			buildingSearchOutput.setFloorArea(buildingEntity.getFloorArea());
-			String[] tachchuoi = buildingEntity.getType().split(",");
-			StringBuilder typeBuilder = new StringBuilder();
-
-			for(int i = 0; i < tachchuoi.length; i++){
-				if(tachchuoi[i].equals(SystemConstant.NGUYEN_CAN)){
-					tachchuoi[i] = "nguyen can";
-				}
-				if(tachchuoi[i].equals(SystemConstant.NOI_THAT)){
-					tachchuoi[i] = "noi that";
-				}
-				if(tachchuoi[i].equals(SystemConstant.TANG_TRET)){
-					tachchuoi[i] = "tang tret";
-				}
-				typeBuilder.append(tachchuoi[i]);
-				if(i < tachchuoi.length - 1){
-					typeBuilder.append(", ");
-				}
-			}
-			buildingSearchOutput.setType(typeBuilder.toString());
+			buildingSearchOutput.setType(getType(buildingEntity.getType()));
 			resaults.add(buildingSearchOutput);
+
 		}
 		
 		return resaults;
@@ -61,10 +46,18 @@ public class BuildingServiceImpl implements BuildingService{
 		BuildingEntity buildingEntity = new BuildingEntity();
 		buildingEntity.setName(buildingDTO.getName());
 		buildingEntity.setStreet(buildingDTO.getStreet());
-		buildingDao.insertBuilding(buildingEntity);
+		buildingDao.insertBuilding(buildingEntity, buildingDTO.getRentArea());
 	}
 
-
+	private String getType(String type){
+		List<String> results = new ArrayList<>();
+		Map<String , String > buildingTypes = BuildingTypeUtils.getTypes();
+		for (String item : type.split(",")){
+			String typeName = buildingTypes.get(item);
+			results.add(typeName);
+		}
+		return String.join(",", results);
+	}
 
 
 }

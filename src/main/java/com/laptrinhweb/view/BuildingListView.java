@@ -12,7 +12,7 @@ public class BuildingListView {
 		Scanner input = new Scanner(System.in);
 //		System.out.println("nhap ten toa nha: ");
 //		String name = input.nextLine();
-		String name = "building 3";
+		String name = "nam bum";
 		Integer floorArea = null;
 		String street = null;
 		String ward = null;

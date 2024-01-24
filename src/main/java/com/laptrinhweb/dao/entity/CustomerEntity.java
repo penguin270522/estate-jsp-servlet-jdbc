@@ -1,4 +1,8 @@
 package com.laptrinhweb.dao.entity;
 
-public class CustomerEntity {
+public class CustomerEntity extends BaseEntity{
+
+
 }
+
+
