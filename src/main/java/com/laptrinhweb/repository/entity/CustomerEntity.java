@@ -1,7 +1,6 @@
-package com.laptrinhweb.dao.entity;
+package com.laptrinhweb.repository.entity;
 
-public class CustomerEntity extends BaseEntity{
-
+public class CustomerEntity extends BaseEntity {
     private String fullName;
     private String phone;
     private String email;
@@ -30,5 +29,3 @@ public class CustomerEntity extends BaseEntity{
         this.email = email;
     }
 }
-
-

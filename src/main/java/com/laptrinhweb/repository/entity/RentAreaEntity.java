@@ -1,6 +1,6 @@
-package com.laptrinhweb.dao.entity;
+package com.laptrinhweb.repository.entity;
 
-public class RentAreaEntity {
+public class RentAreaEntity extends BaseEntity  {
 
 
     private Integer value;

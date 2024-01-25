@@ -5,19 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import com.laptrinhweb.constant.SystemConstant;
-import com.laptrinhweb.dao.BuildingDao;
-import com.laptrinhweb.dao.entity.BuildingEntity;
-import com.laptrinhweb.dao.impl.BuildingDaoImpl;
+
 import com.laptrinhweb.enums.BuildingTypeEnums;
 import com.laptrinhweb.model.dto.BuildingDTO;
 import com.laptrinhweb.model.input.BuildingSearchInput;
 import com.laptrinhweb.model.output.BuildingSearchOutput;
 import com.laptrinhweb.service.BuildingService;
 import com.laptrinhweb.utils.BuildingTypeUtils;
+import com.laptrinhweb.repository.BuildingRepository;
+import com.laptrinhweb.repository.entity.BuildingEntity;
+import com.laptrinhweb.repository.impl.BuildingRepositoryImpl;
 
 public class BuildingServiceImpl implements BuildingService{
 
-	private BuildingDao buildingDao =  new BuildingDaoImpl();
+	private BuildingRepository buildingDao =  new BuildingRepositoryImpl();
 	@Override
 	public List<BuildingSearchOutput> findBuilding(BuildingSearchInput buildingSearchFilterInput) {
 		List<BuildingSearchOutput> resaults = new ArrayList<>();
@@ -40,7 +41,7 @@ public class BuildingServiceImpl implements BuildingService{
 			resaults.add(buildingSearchOutput);
 
 		}
-		
+
 		return resaults;
 	}
 

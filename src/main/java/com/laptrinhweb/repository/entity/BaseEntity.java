@@ -1,4 +1,4 @@
-package com.laptrinhweb.dao.entity;
+package com.laptrinhweb.repository.entity;
 
 public class BaseEntity {
     private Long id;
