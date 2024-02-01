@@ -1,5 +1,9 @@
 package com.laptrinhweb.repository.entity;
 
+
+import com.laptrinhweb.annotation.Table;
+
+@Table(name = "customer")
 public class CustomerEntity extends BaseEntity {
     private String fullName;
     private String phone;

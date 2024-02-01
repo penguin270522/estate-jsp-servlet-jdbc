@@ -1,5 +1,8 @@
 package com.laptrinhweb.repository.entity;
 
+import com.laptrinhweb.annotation.Table;
+
+@Table(name = "building")
 public class BuildingEntity extends BaseEntity {
 
     private String name;

@@ -1,26 +1,38 @@
 package com.laptrinhweb.repository.impl;
 
+import com.laptrinhweb.annotation.Table;
 import com.laptrinhweb.constant.SystemConstant;
 
 import com.laptrinhweb.utils.ConnectionUtils;
 import com.laptrinhweb.repository.BuildingRepository;
 import com.laptrinhweb.repository.entity.BuildingEntity;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingRepositoryImpl implements BuildingRepository {
+public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity> implements BuildingRepository {
+
+    private Class<BuildingEntity> buildingEntityClass;
+    public BuildingRepositoryImpl (){
+        buildingEntityClass = (Class<BuildingEntity>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
     @Override
     public List<BuildingEntity> findBuiling(String name, String street, String ward, String district, Integer floorArea, String type) {
         List<BuildingEntity> results = new ArrayList<>();
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
+        String tableName = null;
+        if(buildingEntityClass.isAnnotationPresent(Table.class)){
+            Table table = buildingEntityClass.getAnnotation(Table.class);
+            tableName = table.name();
+        }
 
         try {
             conn = ConnectionUtils.getConnection();
-            StringBuilder sql = new StringBuilder("select * from building " + SystemConstant.WHERE_ONE_EQUAL_ONE + "");
+            StringBuilder sql = new StringBuilder("select * from " + tableName + " " + SystemConstant.WHERE_ONE_EQUAL_ONE + "");
             stmt = conn.createStatement();
             if(name != null && name != "") {
                 sql.append(" and name like '%" + name +"%' ");
