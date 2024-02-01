@@ -6,11 +6,9 @@ import com.laptrinhweb.repository.JdbcRepository;
 import com.laptrinhweb.repository.entity.BuildingEntity;
 import com.laptrinhweb.utils.ConnectionUtils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,18 +37,24 @@ public class SimpleJdbcRepository <T> implements JdbcRepository <T>{
             String sql = "select * from " + tableName + "";
             String sqlDebug = sql.toString();
             rs = stmt.executeQuery(sqlDebug);
+            Field[] fields = tClass.getDeclaredFields();
+            ResultSetMetaData resultSetMetaData = rs.getMetaData();
             while (rs.next()){
-               /* BuildingEntity buildingEntity = new BuildingEntity();
-                buildingEntity.setName(rs.getString("name"));
-                buildingEntity.setStreet(rs.getString("street"));
-                buildingEntity.setDistrict(rs.getString("district"));
-                buildingEntity.setWard(rs.getString("ward"));
-                buildingEntity.setFloorArea(rs.getInt("floorArea"));
-                buildingEntity.setType(rs.getString("type"));
-                results.add(buildingEntity);*/
-            }
+                T object = tClass.newInstance();
+                for(int i = 0; i < resultSetMetaData.getColumnCount(); i++){
+                    String colummName = resultSetMetaData.getColumnName(i + 1);
+                    Objects columnValue = (Objects) rs.getObject(i + 1);
+                    //loop in fields
+                    for(Field field : fields){
 
-        }catch(SQLException e){
+                    }
+                }
+                //get column Name
+                //get column value
+                //loop in fields
+
+            }
+        }catch(SQLException | InstantiationException | IllegalAccessException e){
             e.printStackTrace();
         } finally {
             try {

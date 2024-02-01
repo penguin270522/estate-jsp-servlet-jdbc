@@ -1,15 +1,35 @@
 package com.laptrinhweb.repository.entity;
 
+import com.laptrinhweb.annotation.Column;
+import com.laptrinhweb.annotation.Entity;
 import com.laptrinhweb.annotation.Table;
 
+@Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
-
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "name")
     private String name;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @Column(name = "street")
     private String street;
+    @Column(name = "ward")
     private String ward;
+    @Column(name = "district")
     private String district;
+    @Column(name = "floorArea")
     private Integer floorArea;
+    @Column(name = "type")
     private String type;
 
     public Integer getFloorArea() {
