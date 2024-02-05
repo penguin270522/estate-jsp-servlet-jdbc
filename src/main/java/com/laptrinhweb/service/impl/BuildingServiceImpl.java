@@ -53,6 +53,12 @@ public class BuildingServiceImpl implements BuildingService{
 		buildingDao.insertBuilding(buildingEntity, buildingDTO.getRentArea());
 	}
 
+	@Override
+	public List<BuildingDTO> findAll() {
+		List<BuildingEntity> buildingEntities = buildingDao.findAll();
+		return null;
+	}
+
 	private String getType1(String type){
 		List<String> results = new ArrayList<>();
 		Map<String , String > buildingTypes = BuildingTypeUtils.getTypes();

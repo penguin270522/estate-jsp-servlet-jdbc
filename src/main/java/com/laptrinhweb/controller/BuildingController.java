@@ -21,4 +21,7 @@ public class BuildingController {
 		buildingService.insertBuildingDTO(buildingDTO);
 	}
 
+	public List<BuildingDTO> findAll(){
+		return buildingService.findAll();
+	}
 }

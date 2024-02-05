@@ -11,5 +11,6 @@ public interface BuildingService {
 	List<BuildingSearchOutput> findBuilding(BuildingSearchInput buildingSearchFilterInput);
 
 	void insertBuildingDTO(BuildingDTO buildingDTO);
+	List<BuildingDTO> findAll();
 
 }
