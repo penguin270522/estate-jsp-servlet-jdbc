@@ -1,6 +1,7 @@
 package com.laptrinhweb.repository.impl;
 
 import com.laptrinhweb.annotation.Column;
+import com.laptrinhweb.annotation.Entity;
 import com.laptrinhweb.annotation.Table;
 import com.laptrinhweb.constant.SystemConstant;
 import com.laptrinhweb.mapper.ResultsetMapper;
@@ -9,6 +10,7 @@ import com.laptrinhweb.repository.entity.BuildingEntity;
 import com.laptrinhweb.utils.ConnectionUtils;
 import org.apache.commons.beanutils.BeanUtils;
 
+import javax.swing.border.EmptyBorder;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -34,7 +36,7 @@ public class SimpleJdbcRepository <T> implements JdbcRepository <T>{
             stmt = conn.createStatement();
 
             String tableName = null;
-            if(tClass.isAnnotationPresent(Table.class)){
+            if(tClass.isAnnotationPresent(Entity.class) &&tClass.isAnnotationPresent(Table.class)){
                 Table table = tClass.getAnnotation(Table.class);
                 tableName = table.name();
             }
