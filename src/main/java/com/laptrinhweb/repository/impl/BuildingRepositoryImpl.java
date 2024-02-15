@@ -20,80 +20,27 @@ public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity>
     }
     @Override
     public List<BuildingEntity> findBuiling(String name, String street, String ward, String district, Integer floorArea, String type) {
-        List<BuildingEntity> results = new ArrayList<>();
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        String tableName = null;
-        if(buildingEntityClass.isAnnotationPresent(Table.class)){
-            Table table = buildingEntityClass.getAnnotation(Table.class);
-            tableName = table.name();
+        StringBuilder sql = new StringBuilder("select * from building where "  + " " + SystemConstant.WHERE_ONE_EQUAL_ONE + "");
+        if(name != null && name != "") {
+            sql.append(" and name like '%" + name + "%' ");
         }
-
-        try {
-            conn = ConnectionUtils.getConnection();
-            StringBuilder sql = new StringBuilder("select * from " + tableName + " " + SystemConstant.WHERE_ONE_EQUAL_ONE + "");
-            stmt = conn.createStatement();
-            if(name != null && name != "") {
-                sql.append(" and name like '%" + name +"%' ");
-
-            }
-            if(ward != null && ward != "") {
-                sql.append(" and ward like '%" + ward +"%' ");
-
-            }
-            if(street != null && street != "") {
-                sql.append(" and street like '%" + street +"%' ");
-
-            }
-            if(district != null && district != "") {
-                sql.append(" and district like '%" + district +"%' ");
-
-
-            }
-            if(floorArea != null) {
-                sql.append(" and floorArea like '%" + floorArea +"%' ");
-
-            }
-            if(type != null && type != ""){
-                sql.append(" and type like '%" + type + "%' ");
-
-            }
-
-            rs = stmt.executeQuery(sql.toString());
-            while (rs.next()) {
-                BuildingEntity buildingEntity = new BuildingEntity();
-                buildingEntity.setId(rs.getLong("id"));
-                buildingEntity.setName(rs.getString("name"));
-                buildingEntity.setStreet(rs.getString("street"));
-                buildingEntity.setWard(rs.getString("ward"));
-                buildingEntity.setDistrict(rs.getString("district"));
-                buildingEntity.setFloorArea(rs.getInt("floorArea"));
-                buildingEntity.setType(rs.getString("type"));
-                results.add(buildingEntity);
-            }
-            return results;
-        } catch (SQLException | ArithmeticException e) {
-            System.out.println(e.getMessage());
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+        if(ward != null && ward != "") {
+            sql.append(" and ward like '%" + ward +"%' ");
         }
-        finally {
-            try {
-                if ( conn != null) {
-                    conn.close();
-                }
-                if( stmt != null) {
-                    stmt.close();
-                }
-                if(rs != null) {
-                    rs.close();
-                }
-            }catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+        if(street != null && street != "") {
+            sql.append(" and street like '%" + street +"%' ");
         }
-        return null;
+        if(district != null && district != "") {
+            sql.append(" and district like '%" + district +"%' ");
+        }
+        if(floorArea != null) {
+            sql.append(" and floorArea like '%" + floorArea +"%' ");
+        }
+        if(type != null && type != ""){
+            sql.append(" and type like '%" + type + "%' ");
+        }
+        String sqlDebug = sql.toString();
+        return findByCondition(sqlDebug);
     }
 
     @Override
@@ -104,7 +51,7 @@ public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity>
 
         try {
             conn = ConnectionUtils.getConnection();
-            conn.setAutoCommit(false);
+//            conn.setAutoCommit(false);
             String sql1 = "INSERT INTO building (name, street) VALUES (?,?)";
             stmt = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, buildingEntity.getName());
@@ -131,18 +78,18 @@ public class BuildingRepositoryImpl extends SimpleJdbcRepository<BuildingEntity>
                     stmt.executeUpdate();
                 }
             }
-            conn.commit();
+//            conn.commit();
         }catch (SQLException e){
-            try {
-                conn.rollback();
-            }catch (SQLException e1){
-                e1.printStackTrace();
-            }
+//            try {
+//                conn.rollback();
+//            }catch (SQLException e1){
+                e.printStackTrace();
+//            }
 
         } finally {
             try{
                 if(conn != null){
-                    conn.rollback();
+                    conn.close();
                 }
                 if(stmt != null){
                     stmt.close();

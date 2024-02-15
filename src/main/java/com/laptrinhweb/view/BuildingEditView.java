@@ -5,7 +5,7 @@ import com.laptrinhweb.model.dto.BuildingDTO;
 
 public class BuildingEditView {
     public static void main(String[] args) {
-        String name = "building 6";
+        String name = "building 4";
         String street = "50 ham nghi";
         String ward = null;
         String district = null;

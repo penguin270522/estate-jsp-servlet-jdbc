@@ -7,20 +7,8 @@ import com.laptrinhweb.annotation.Table;
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
-    @Column(name = "id")
-    private Long id;
     @Column(name = "name")
     private String name;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
     @Column(name = "street")
     private String street;
     @Column(name = "ward")
